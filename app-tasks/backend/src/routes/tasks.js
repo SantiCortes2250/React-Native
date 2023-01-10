@@ -3,17 +3,75 @@ import { getTasks, getTask, getTaskCount, createTask, updateTask, deleteTask } f
 
 const router = Router();
 
+/**
+ * @swagger
+ * tags:
+ *  name: Tasks
+ *  description: Tasks endpoint
+
+
+ */
+
+
+/**
+ * @swagger
+ * /tasks:
+ *   get:
+ *     summary: Get all tasks
+ *     tags: [Tasks]
+
+
+ */
 router.get('/tasks', getTasks);
+/**
+ * @swagger
+ * /tasks/count:
+ *   get:
+ *     summary: Get total task counter
+ *     tags: [Tasks]
+ */
 
 router.get('/tasks/count', getTaskCount)
 
+/**
+ * @swagger
+ * /tasks:
+ *   get:
+ *     summary: Get a task by id
+ *     tags: [Tasks]
+ */
+
 router.get('/tasks/:id', getTask)
+
+/**
+ * @swagger
+ * /tasks:
+ *   post:
+ *     summary: save a new task
+ *     tags: [Tasks]
+ */
 
 router.post('/tasks', createTask)
 
+/**
+ * @swagger
+ * /tasks:
+ *   delete:
+ *     summary: delete a task by id
+ *     tags: [Tasks]
+ */
+
 router.delete('/tasks/:id', deleteTask)
 
-router.put('/tasks:id', updateTask)
+/**
+ * @swagger
+ * /tasks:
+ *   put:
+ *     summary: update a task by id
+ *     tags: [Tasks]
+ */
+
+router.put('/tasks/:id', updateTask)
 
 export default router;
 

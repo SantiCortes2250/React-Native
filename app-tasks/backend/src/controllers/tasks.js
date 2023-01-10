@@ -45,12 +45,11 @@ export const deleteTask = async (req, res) => {
 
 export const updateTask = async (req, res) => {
     const conection = await connect();
-    const results = await conection.query('UPDATE tasks SET ? WHERE  id=?', [
+    await conection.query('UPDATE tasks SET ? WHERE  id=?', [
         req.body,
         req.params.id
     ])
     
-    console.log(results)
     res.sendStatus(204);
 
 }

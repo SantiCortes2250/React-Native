@@ -32,6 +32,6 @@ Content-Type: application/json
 
 {
     "title": "task 7",
-    "description": "some description task 7"
+    "description": "some"
 }
 
