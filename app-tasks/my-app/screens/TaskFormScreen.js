@@ -16,7 +16,7 @@ const TaskFormScreen = ({navigation}) => {
 
   const handleSubmit = () =>{
     saveTask(task)
-    navigation.navigate('TaskFormScreen')
+    navigation.navigate('HomeScreen')
 
 
   }

@@ -5,33 +5,11 @@ import TaskList from '../components/TaskList'
 import Layout from '../components/Layout'
 
 
-const HomeScreen = () => {
-
-    const [tasks, setTasks] = useState([])
-
-
-    const loadTask = async () =>{
-        const data = await getTask()
-        setTasks(data)
-
-        
-        
-    }
-
-    useEffect(() => {
-        loadTask()
-        
-
-
-    }, [])
-  return (
+const HomeScreen = () => (
     <Layout>
-        
-        <TaskList tasks={tasks} />
-        
-        
+        <TaskList  />
     </Layout>
   )
-}
+
 
 export default HomeScreen
