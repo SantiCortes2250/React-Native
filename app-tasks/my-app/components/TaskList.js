@@ -1,7 +1,7 @@
 import {  FlatList, RefreshControl } from 'react-native'
 import React, {useEffect, useState} from 'react'
 import TaskItem from './TaskItem'
-import { getTask, deleteTask } from '../api'
+import {  deleteTask, getTasks } from '../api'
 
 
 const TaskList = () => {
@@ -12,7 +12,7 @@ const TaskList = () => {
 
 
     const loadTask = async () =>{
-        const data = await getTask()
+        const data = await getTasks()
         setTasks(data)
     }
 
