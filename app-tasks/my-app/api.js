@@ -1,4 +1,4 @@
-const API = 'http://192.168.0.14:3000/tasks'
+const API = 'http://192.168.0.12:3000/tasks'
 
 export const getTasks = async () =>{
     const res = await fetch(API)
@@ -34,6 +34,19 @@ export const deleteTask = async (id) =>{
         method: 'DELETE',
     })
 
+
+}
+
+export const updateTask = async (id, newTask) => {
+    const res = await fetch(`${API}/${id}`,{
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json', 'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newTask)
+    })
+
+    return res;
 
 }
 

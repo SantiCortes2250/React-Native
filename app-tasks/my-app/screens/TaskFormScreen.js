@@ -1,26 +1,42 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity  } from 'react-native'
 import React, {useState, useEffect} from 'react'
 import Layout from '../components/Layout'
-import { saveTask, getTask } from '../api'
+import { saveTask, getTask, updateTask } from '../api'
 import { TabRouter } from '@react-navigation/native'
 
 
 const TaskFormScreen = ({navigation, route}) => {
 
 
-  const [task, setTasks] = useState({
+  const [tasks, setTasks] = useState({
     title: "",
     description: ""
   })
 
+    const [edit, setEditing] = useState(false)
   
 
 
-  const handleChange = (name, value) => setTasks({...task, [name]:value})
+  const handleChange = (name, value) => setTasks({...tasks, [name]:value})
 
-  const handleSubmit = () =>{
-    saveTask(task)
-    navigation.navigate('HomeScreen')
+  const handleSubmit = async() =>{
+    try {
+      
+      if (!edit){
+        await saveTask(tasks)
+
+      }else{
+        await updateTask(route.params.id, tasks)
+      }
+      
+      navigation.navigate('HomeScreen')
+      
+    } catch (error) {
+      console.error(error)
+      
+    }
+
+
 
 
   }
@@ -34,18 +50,25 @@ const TaskFormScreen = ({navigation, route}) => {
   
   useEffect(() => {
     if(route.params && route.params.id){
-        navigation.setOptions({ headerTitle: 'Updating a Task'});
+        navigation.setOptions({ headerTitle: 'Updating a Task'})
+        setEditing(true); 
 
         
         (async () =>{
           const task = await getTask(route.params.id);
-          setTasks({ title: task.title, description: task.description})
+          
+          task.forEach(element => {
+            setTasks({ title: element.title, description: element.description})
+            
+          });
+          
+        
 
           
         })();
     }
     
-  }, [])
+  }, []);
 
   
   
@@ -56,7 +79,7 @@ const TaskFormScreen = ({navigation, route}) => {
       <TextInput style={style.styleInput}
         placeholder='Write a title'
         onChangeText={(text) => handleChange('title', text)}
-        value={task.title}
+        value={tasks.title}
 
 
 
@@ -64,17 +87,19 @@ const TaskFormScreen = ({navigation, route}) => {
       <TextInput style={style.styleInput}
         placeholder='Write a description'
         onChangeText={(text) => handleChange('description', text)}
-        value={task.description}
+        value={tasks.description}
 
       />
-      <TouchableOpacity style={style.styleBtn} onPress={handleSubmit}>
-        <Text style={style.styleText}>
-          Save Task
-        </Text>
-      </TouchableOpacity> 
-
-
-    </Layout>
+      {!edit ? (
+          <TouchableOpacity style={style.styleBtn} onPress={handleSubmit}>
+            <Text style={style.styleText}>Save Task</Text>
+          </TouchableOpacity> 
+        ) : (
+          <TouchableOpacity style={style.styleBtn} onPress={handleSubmit}>
+            <Text style={style.styleText}>Update Task</Text>
+          </TouchableOpacity> 
+      )}
+      </Layout>
   )
 }
 
